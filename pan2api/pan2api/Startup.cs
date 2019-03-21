@@ -3,8 +3,10 @@ using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using pan2api.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace pan2api
@@ -22,6 +24,10 @@ namespace pan2api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<MyContext>(options =>
+            {
+                options.UseMySQL(Configuration.GetConnectionString("MyContext"));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(

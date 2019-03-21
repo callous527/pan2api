@@ -19,6 +19,10 @@ namespace pan2api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((webHostBuilder, configurationBinder) =>
+            {
+                configurationBinder.AddJsonFile("appsettings.json", optional: true);
+            })
                 .UseStartup<Startup>();
     }
 }
